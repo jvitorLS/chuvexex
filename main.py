@@ -9,9 +9,6 @@ from data_handler import CSVReader
 from pychromepdf import ChromePDF
 from template import gerar_html
 
-# Função principal (main) - Executa as classes
-PATH_TO_CHROME_EXE = '/usr/bin/firefox'
-
 def main():
     # Configuração do ambiente e caminho do arquivo CSV
     csv_path = os.path.join(os.path.dirname(__file__), 'dados.csv')
@@ -35,17 +32,7 @@ def main():
     bairro_comparison_graph_base64 = chuvex.plot_bairro_comparison(bairro_input)
 
     # Salvar o HTML para visualização (ou processamento posterior)
-    html = gerar_html(bairro_input, population_graph_base64, bairro_comparison_graph_base64)
-
-    pdf_output_path = os.path.join(os.path.dirname(__file__), 'output.pdf')
-
-    # Abrir o arquivo de saída PDF para escrita
-    with open(pdf_output_path, 'wb') as output_file:
-        cpdf = ChromePDF(PATH_TO_CHROME_EXE)
-        if cpdf.html_to_pdf(html, output_file):
-            print(f"PDF gerado e salvo como {pdf_output_path}.")
-        else:
-            print("Erro ao gerar o PDF.")
+    html = gerar_html(population_graph_base64, bairro_comparison_graph_base64)
 
 if __name__ == "__main__":
     main()

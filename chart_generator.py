@@ -55,13 +55,28 @@ class ChuvexGraphGenerator:
         if not bairro:
             print(f"Bairro '{bairro_name}' não encontrado nos dados.")
             return
-
-        categorias = ['Habitantes', 'KM2', 'Altitude']
-        valores = [bairro['Habitantes'], bairro['KM²'], bairro['Altitude']]
+        
+        densidade_demografica = bairro['Habitantes'] / bairro['KM²']
+        categorias = ['Habitantes','KM2']
+        valores = [bairro['Habitantes'], bairro['KM²']]
 
         plt.figure(figsize=(8, 5))
-        plt.bar(categorias, valores, color=['blue', 'green', 'orange'], alpha=0.8)
-        plt.title(f'Comparativo de Dados do Bairro {bairro_name}', fontsize=14)
+        bars = plt.bar(categorias, valores, color=['blue', 'green'], alpha=0.8, width=0.5)
+
+
+        for bar, valor in zip(bars, valores):
+            plt.text(
+                bar.get_x() + bar.get_width() / 2, 
+                bar.get_height() + 0.1,            
+                f"{valor:.2f}",                    
+                ha='center',
+                fontsize=10
+            )
+
+        plt.title(
+            f"Comparativo de Dados do Bairro: {bairro_name}\n\nDensidade Demográfica: {densidade_demografica:.2f} hab/km²", 
+            fontsize=14
+        )
         plt.ylabel('Valores', fontsize=12)
         plt.xticks(fontsize=10)
         plt.yticks(fontsize=10)

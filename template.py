@@ -1,7 +1,7 @@
 import os
 
 # Função para gerar o HTML e salvar em um arquivo
-def gerar_html(bairro_input, population_graph_base64, bairro_comparison_graph_base64):
+def gerar_html(population_graph_base64, bairro_comparison_graph_base64):
     html_content = f"""
     <!DOCTYPE html>
     <html lang="en">
